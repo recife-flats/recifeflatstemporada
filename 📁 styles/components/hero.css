@@ -1,1 +1,259 @@
+/* ============================================================
+   HERO — Vídeo em loop infinito ocupando 100vh
+   "Stop-scroll": força o visitante a parar e olhar.
+   Conteúdo respeita o .container para alinhar com o resto do site.
+============================================================ */
 
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;          /* iOS Safari respeita o viewport real */
+  min-height: 640px;
+  margin-top: calc(-1 * var(--nav-height));   /* hero passa por baixo da navbar sticky */
+  overflow: hidden;
+  isolation: isolate;      /* cria contexto de stacking para os z-index internos */
+  background-color: var(--ocean);  /* fallback enquanto o vídeo carrega */
+}
+
+/* Vídeo de fundo full-screen */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  /* trick: dá uma leve saturação cinematográfica */
+  filter: saturate(1.05) contrast(1.02);
+}
+
+/* Poster fallback enquanto o vídeo não carrega */
+.hero__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* Overlay com gradiente cinematográfico */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    /* viñeta inferior pra leitura */
+    linear-gradient(180deg,
+      rgba(13, 13, 13, 0.3) 0%,
+      rgba(13, 13, 13, 0.0) 30%,
+      rgba(13, 13, 13, 0.0) 60%,
+      rgba(13, 13, 13, 0.65) 100%),
+    /* gradiente diagonal warm */
+    linear-gradient(135deg,
+      rgba(110, 36, 16, 0.35) 0%,
+      rgba(26, 63, 82, 0.25) 55%,
+      rgba(13, 13, 13, 0.15) 100%);
+}
+
+/* Grão sutil sobre o vídeo */
+.hero__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* --- Conteúdo --- */
+.hero__container {
+  position: relative;
+  z-index: 4;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-block: calc(var(--nav-height) + var(--space-7)) var(--space-9);
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(196, 155, 106, 0.16);
+  border: 1px solid rgba(196, 155, 106, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--radius-pill);
+  padding: 7px var(--space-4);
+  width: fit-content;
+  margin-bottom: var(--space-6);
+  opacity: 0;
+  transform: translateY(20px);
+}
+.hero__eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--sand);
+  border-radius: 50%;
+  animation: hero-pulse 2s ease-in-out infinite;
+}
+@keyframes hero-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.7); }
+}
+.hero__eyebrow-text {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--sand);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--white);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-5);
+  max-width: 16ch;
+}
+.hero__title em {
+  font-style: italic;
+  color: var(--sand);
+}
+
+.hero__description {
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  line-height: var(--lh-relaxed);
+  color: var(--white-65);
+  max-width: 44ch;
+  margin-bottom: var(--space-7);
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero__cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* --- Stats no rodapé do hero --- */
+.hero__stats {
+  display: flex;
+  align-items: center;
+  gap: clamp(var(--space-5), 3vw, var(--space-7));
+  margin-top: var(--space-9);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--white-10);
+  max-width: 640px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.hero__stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1;
+}
+.hero__stat-label {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+.hero__stat-div {
+  width: 1px;
+  height: 40px;
+  background: var(--white-10);
+}
+
+/* --- Indicador de scroll --- */
+.hero__scroll {
+  position: absolute;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.hero__scroll-text {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--white-65);
+}
+.hero__scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, var(--sand) 0%, transparent 100%);
+  animation: hero-scroll-line 1.6s ease-in-out infinite;
+}
+@keyframes hero-scroll-line {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* --- Letras animadas (split text) --- */
+.hero__title .letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+}
+
+/* --- Responsivo --- */
+@media (max-width: 700px) {
+  .hero { min-height: 600px; }
+  .hero__container {
+    padding-block: calc(var(--nav-height-mobile) + var(--space-5)) var(--space-7);
+  }
+  .hero__stats {
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+  }
+  .hero__stat-div { height: 30px; }
+}
+
+@media (max-width: 480px) {
+  .hero__description { max-width: 32ch; }
+  .hero__stats {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+}
+
+/* --- Quando o catálogo (menu) abre, o site dobra com perspectiva 3D --- */
+.site-content {
+  position: relative;
+  z-index: 2;
+  background-color: var(--cream);
+  min-height: 100vh;
+  transform-origin: right center;
+  will-change: transform, filter;
+}
