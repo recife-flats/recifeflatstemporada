@@ -1,1 +1,42 @@
+/* ============================================================
+   HOME — Estilos específicos da home page.
+   Tudo que é compartilhado vai em components/. Aqui só o que
+   for único desta página (ex: composições/seções específicas).
+============================================================ */
 
+/* Placeholder das próximas seções */
+.next-section {
+  background: var(--cream);
+  padding-block: var(--space-10);
+}
+
+.next-section__inner {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.next-section__eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: var(--space-3);
+  display: block;
+}
+
+.next-section__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 300;
+  color: var(--text);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.15;
+  max-width: 24ch;
+  margin-inline: auto;
+}
+
+.next-section__title em {
+  font-style: italic;
+  color: var(--clay);
+}
