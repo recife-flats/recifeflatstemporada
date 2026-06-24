@@ -1,1 +1,303 @@
+/* ============================================================
+   MENU OVERLAY — O "catálogo" que abre virando como página de livro
+   Posicionado atrás do #site-content (z-index baixo) e trazido
+   pra frente pelo JS quando ativo.
+============================================================ */
 
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-base);   /* começa atrás do site */
+  pointer-events: none;
+  display: flex;
+  overflow: hidden;
+}
+
+.menu-overlay.is-active {
+  pointer-events: all;
+  z-index: var(--z-menu);
+}
+
+/* --- Coluna esquerda: navegação --- */
+.menu-overlay__left {
+  width: 55%;
+  height: 100%;
+  background-color: var(--clay);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-7) clamp(2.5rem, 5vw, 3.75rem) var(--space-8);
+  overflow: hidden;
+}
+
+/* Círculos decorativos no fundo */
+.menu-overlay__left::before,
+.menu-overlay__left::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  border: 1px solid rgba(196, 155, 106, 0.12);
+}
+.menu-overlay__left::before {
+  width: 440px; height: 440px;
+  bottom: -200px; left: -200px;
+}
+.menu-overlay__left::after {
+  width: 260px; height: 260px;
+  bottom: -110px; left: -110px;
+  border-color: rgba(196, 155, 106, 0.06);
+}
+
+/* Header interno do menu */
+.menu-overlay__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+.menu-overlay__logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--white);
+}
+.menu-overlay__logo-sub {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-top: 1px;
+}
+
+.menu-overlay__close {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--white-40);
+  transition: color var(--dur-base);
+  padding: var(--space-2);
+}
+.menu-overlay__close:hover { color: var(--sand); }
+
+.menu-overlay__close-circle {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--white-20);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  line-height: 1;
+  transition: border-color var(--dur-base), background var(--dur-base);
+}
+.menu-overlay__close:hover .menu-overlay__close-circle {
+  border-color: var(--sand);
+  background: rgba(196, 155, 106, 0.1);
+}
+
+/* Nav links */
+.menu-overlay__nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-5) 0;
+  position: relative;
+  z-index: 2;
+}
+
+.menu-overlay__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;   /* recorta o link na animação de entrada */
+}
+.menu-overlay__item:last-child { border-bottom: none; }
+
+.menu-overlay__num {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  color: var(--white-20);
+  flex-shrink: 0;
+  width: 28px;
+  transition: color var(--dur-base);
+}
+.menu-overlay__item:hover .menu-overlay__num { color: var(--sand); }
+
+.menu-overlay__link-wrap { overflow: hidden; flex: 1; }
+
+.menu-overlay__link {
+  font-family: var(--font-display);
+  font-size: clamp(2.375rem, 4.5vw, 4.125rem);
+  font-weight: 300;
+  color: var(--white);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.05;
+  display: block;
+  background-image: linear-gradient(var(--sand), var(--sand));
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: background-size 450ms var(--ease-flip), color var(--dur-base);
+}
+.menu-overlay__link:hover {
+  color: var(--sand);
+  background-size: 100% 1px;
+}
+
+.menu-overlay__arrow {
+  color: var(--white-20);
+  font-size: 20px;
+  transform: translateX(-10px);
+  opacity: 0;
+  transition: transform 350ms, opacity 350ms, color var(--dur-base);
+  margin-left: auto;
+}
+.menu-overlay__item:hover .menu-overlay__arrow {
+  transform: translateX(0);
+  opacity: 1;
+  color: var(--sand);
+}
+
+/* Rodapé do menu */
+.menu-overlay__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+.menu-overlay__copy {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--white-20);
+}
+.menu-overlay__socials {
+  display: flex;
+  gap: var(--space-5);
+}
+.menu-overlay__social {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  transition: color var(--dur-base);
+}
+.menu-overlay__social:hover { color: var(--sand); }
+
+/* --- Coluna direita: imagem + contato --- */
+.menu-overlay__right {
+  width: 45%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-overlay__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=80');
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.07);
+  transition: transform 1s var(--ease-flip);
+}
+.menu-overlay.is-active .menu-overlay__bg { transform: scale(1); }
+
+.menu-overlay__bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg,
+    rgba(110, 36, 16, 0.68) 0%,
+    rgba(26, 63, 82, 0.4) 55%,
+    rgba(13, 13, 13, 0.28) 100%
+  );
+}
+
+.menu-overlay__right-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-7) clamp(2rem, 4vw, 3rem);
+}
+
+.menu-overlay__edition {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+  margin-bottom: var(--space-3);
+}
+
+.menu-overlay__tagline {
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 2.8vw, 2.625rem);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: var(--space-6);
+}
+.menu-overlay__tagline em {
+  font-style: italic;
+  color: var(--sand);
+}
+
+.menu-overlay__contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--white-10);
+}
+.menu-overlay__contact-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.menu-overlay__contact-icon {
+  width: 17px; height: 17px;
+  color: var(--sand);
+  flex-shrink: 0;
+}
+.menu-overlay__contact-item a {
+  font-size: var(--fs-sm);
+  color: var(--white-65);
+  transition: color var(--dur-fast);
+}
+.menu-overlay__contact-item a:hover { color: var(--sand); }
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .menu-overlay__right { display: none; }
+  .menu-overlay__left {
+    width: 100%;
+    padding: var(--space-7) var(--space-7) var(--space-8);
+  }
+}
+@media (max-width: 700px) {
+  .menu-overlay__left {
+    padding: var(--space-6) var(--space-6) var(--space-7);
+  }
+}
+@media (max-width: 480px) {
+  .menu-overlay__left {
+    padding: var(--space-5) var(--space-5) var(--space-6);
+  }
+}
