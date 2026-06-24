@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recife Flats Temporada — Apartamentos premium em Recife</title>
+  <meta name="description" content="Apartamentos totalmente equipados para temporada em Recife. Conforto, localização e experiências únicas a passos da praia." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- CSS: ordem importa (tokens → base → utilities → components → pages) -->
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/utilities.css" />
+  <link rel="stylesheet" href="/styles/components/announcement.css" />
+  <link rel="stylesheet" href="/styles/components/button.css" />
+  <link rel="stylesheet" href="/styles/components/navbar.css" />
+  <link rel="stylesheet" href="/styles/components/menu-overlay.css" />
+  <link rel="stylesheet" href="/styles/components/hero.css" />
+  <link rel="stylesheet" href="/styles/pages/home.css" />
+</head>
+
+<body>
+
+  <!--
+    O <rf-menu> é renderizado FORA do .site-content porque ele precisa
+    ficar atrás do conteúdo (z-index baixo) e ser trazido pra frente
+    pelo JS. O atributo wraps aponta para o que vai "virar" ao abrir.
+  -->
+  <rf-menu wraps=".site-content"></rf-menu>
+
+  <!--
+    TUDO que pertence ao "site" vai dentro de .site-content.
+    É esse elemento que dobra com perspectiva 3D quando o menu abre.
+  -->
+  <div class="site-content">
+
+    <rf-announcement>
+      🌴 Promoção de Temporada — <strong>até 20% off</strong> nas reservas de 5+ noites
+    </rf-announcement>
+
+    <rf-navbar over-hero hero-target="#hero"></rf-navbar>
+
+    <!--
+      Hero com vídeo em loop infinito.
+      - Coloque seu próprio vídeo em /assets/videos/ (MP4 + WebM otimizados)
+      - Inclua um poster (frame estático) pra carregar instantâneo
+      - O componente cuida de autoplay, muted, loop, playsinline
+    -->
+    <rf-hero
+      video="https://cdn.coverr.co/videos/coverr-aerial-view-of-the-beach-2633/1080p.mp4"
+      poster="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1600&q=80"
+      eyebrow="Recife · Boa Viagem · Pina"
+      title='Sua temporada em <em>Recife</em> começa por aqui'
+      description="Apartamentos totalmente equipados a passos da praia. Para famílias, casais e viajantes exigentes."
+      primary-href="#apartamentos"
+      primary-label="Ver apartamentos"
+      ghost-href="#contato"
+      ghost-label="Consultar disponibilidade">
+
+      <ul slot="stats" hidden>
+        <li data-num="4"    data-label="Apartamentos"></li>
+        <li data-num="200+" data-label="Hóspedes felizes"></li>
+        <li data-num="4.9"  data-label="Nota média"></li>
+      </ul>
+    </rf-hero>
+
+    <!-- Próximas seções entrariam aqui — usando .container pra manter alinhamento -->
+    <section class="next-section">
+      <div class="container next-section__inner">
+        <span class="next-section__eyebrow">A seguir</span>
+        <h2 class="next-section__title">
+          Apartamentos, <em>sobre</em>, depoimentos e contato — em breve
+        </h2>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- GSAP (CDN) — animations engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Nosso JS, como módulo -->
+  <script type="module" src="/scripts/main.js"></script>
+
+</body>
+</html>
