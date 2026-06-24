@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apartamentos — Recife Flats Temporada</title>
+  <meta name="description" content="Conheça nossos apartamentos premium para temporada em Recife." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!--
+    Atenção: nesta página NÃO carregamos hero.css porque não tem hero.
+    Só o que essa página realmente precisa.
+  -->
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/utilities.css" />
+  <link rel="stylesheet" href="/styles/components/announcement.css" />
+  <link rel="stylesheet" href="/styles/components/button.css" />
+  <link rel="stylesheet" href="/styles/components/navbar.css" />
+  <link rel="stylesheet" href="/styles/components/menu-overlay.css" />
+
+  <style>
+    /* Para essa página, a navbar começa já no estado scrolled
+       (não tem hero pra ficar "por cima"). O CSS abaixo é uma
+       customização mínima de página — alternativa: criar um
+       arquivo styles/pages/apartamentos.css. */
+    .site-content { background: var(--cream); min-height: 100vh; }
+    .page-header {
+      padding-block: calc(var(--nav-height) + var(--space-9)) var(--space-9);
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: var(--fs-2xl);
+      font-weight: 300;
+      letter-spacing: var(--tracking-tight);
+      max-width: 18ch;
+    }
+  </style>
+</head>
+
+<body>
+
+  <rf-menu wraps=".site-content"></rf-menu>
+
+  <div class="site-content">
+
+    <rf-announcement>
+      🌴 <strong>Reserve agora</strong> — disponibilidade limitada para alta temporada
+    </rf-announcement>
+
+    <!-- Sem o atributo over-hero porque não tem hero -->
+    <rf-navbar></rf-navbar>
+
+    <main>
+      <section class="page-header">
+        <div class="container">
+          <span class="eyebrow">Coleção 2026</span>
+          <h1>Quatro apartamentos, <em class="display-italic">uma só atenção</em>.</h1>
+        </div>
+      </section>
+
+      <!-- Outras seções aqui -->
+    </main>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script type="module" src="/scripts/main.js"></script>
+
+</body>
+</html>
