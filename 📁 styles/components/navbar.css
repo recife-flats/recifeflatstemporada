@@ -1,1 +1,154 @@
+/* ============================================================
+   NAVBAR — Header sticky no topo
+   Dois estados: sobre o hero (transparente) e scrolled (frosted glass).
+   Conteúdo interno respeita o .container global.
+============================================================ */
 
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  background: transparent;
+  transition: background var(--dur-slow) var(--ease-out),
+              backdrop-filter var(--dur-slow) var(--ease-out),
+              box-shadow var(--dur-slow) var(--ease-out);
+}
+
+.navbar.is-scrolled {
+  background: rgba(246, 239, 228, 0.93);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(110, 36, 16, 0.07);
+}
+
+.navbar__inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+/* --- Logo --- */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+.navbar__logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--clay);
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background var(--dur-base);
+}
+.navbar__logo:hover .navbar__logo-icon { background: var(--clay-light); }
+
+.navbar__logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.navbar__logo-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: var(--tracking-tight);
+  transition: color var(--dur-base);
+}
+.navbar__logo-sub {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--sand);
+}
+
+/* Estado sobre o hero — texto branco */
+.navbar.is-over-hero .navbar__logo-name { color: var(--white); }
+
+/* --- Ações --- */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Botão WhatsApp — usa o .btn base + modificador */
+.navbar.is-over-hero .btn--whatsapp {
+  background: var(--white-10);
+  border: 1px solid var(--white-20);
+  backdrop-filter: blur(4px);
+}
+.navbar.is-over-hero .btn--whatsapp:hover { background: var(--white-20); }
+
+/* --- Toggle Menu (substitui o hambúrguer) --- */
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-1);
+  font-family: var(--font-body);
+}
+.menu-toggle__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text);
+  transition: color var(--dur-base);
+}
+.navbar.is-over-hero .menu-toggle__label { color: var(--white); }
+
+.menu-toggle__icon {
+  width: 28px;
+  height: 18px;
+  position: relative;
+  flex-shrink: 0;
+}
+.menu-toggle__icon span {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1.5px;
+  background: var(--text);
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform 450ms var(--ease-flip),
+              opacity 450ms,
+              top 450ms var(--ease-flip),
+              background var(--dur-base);
+}
+.navbar.is-over-hero .menu-toggle__icon span { background: var(--white); }
+
+.menu-toggle__icon span:nth-child(1) { top: 0; }
+.menu-toggle__icon span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.menu-toggle__icon span:nth-child(3) { bottom: 0; top: auto; }
+
+/* Aberto: vira X */
+.menu-toggle.is-open .menu-toggle__icon span:nth-child(1) {
+  top: 50%; transform: translateY(-50%) rotate(45deg);
+}
+.menu-toggle.is-open .menu-toggle__icon span:nth-child(2) {
+  opacity: 0; transform: translateY(-50%) scaleX(0);
+}
+.menu-toggle.is-open .menu-toggle__icon span:nth-child(3) {
+  top: 50%; transform: translateY(-50%) rotate(-45deg);
+}
+.menu-toggle.is-open .menu-toggle__icon span { background: var(--sand); }
+.menu-toggle.is-open .menu-toggle__label    { color: var(--sand); }
+
+/* Mobile */
+@media (max-width: 600px) {
+  .navbar { height: var(--nav-height-mobile); }
+  .btn--whatsapp .btn__label { display: none; }
+  .btn--whatsapp { padding: var(--space-3); border-radius: 50%; }
+  .menu-toggle__label { display: none; }
+}
