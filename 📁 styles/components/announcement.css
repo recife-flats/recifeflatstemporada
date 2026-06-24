@@ -1,1 +1,44 @@
+/* ============================================================
+   ANNOUNCEMENT BAR — Barra de promoção no topo
+   Reutilizável: aparece em todas as páginas se desejado.
+============================================================ */
 
+.announcement {
+  background-color: var(--clay);
+  color: var(--white);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-align: center;
+  padding: 9px var(--space-7);
+  position: relative;
+  overflow: hidden;
+  transition: max-height var(--dur-base) var(--ease-out),
+              padding    var(--dur-base) var(--ease-out),
+              opacity    var(--dur-base) var(--ease-out);
+  max-height: 40px;
+}
+
+.announcement[hidden],
+.announcement.is-hidden {
+  max-height: 0;
+  padding-block: 0;
+  opacity: 0;
+  pointer-events: none;
+  display: block; /* override do [hidden] pra animar */
+}
+
+.announcement__text strong { color: var(--sand); font-weight: 600; }
+
+.announcement__close {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--white-40);
+  font-size: 14px;
+  line-height: 1;
+  padding: 4px;
+  transition: color var(--dur-fast);
+}
+.announcement__close:hover { color: var(--white); }
